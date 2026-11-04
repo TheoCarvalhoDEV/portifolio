@@ -157,6 +157,12 @@
       transform: translateY(-100%)
     }
 
+    /* com o menu mobile aberto, o header não pode criar um "contêiner" que prenda o menu fixo */
+    header.menu-open {
+      backdrop-filter: none;
+      transform: none
+    }
+
     nav {
       display: flex;
       align-items: center;
@@ -181,9 +187,42 @@
     .menu {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 12px;
       font-size: 14px;
       font-weight: 500
+    }
+
+    .nav-group {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(20, 20, 22, .6);
+      backdrop-filter: blur(8px)
+    }
+
+    .nav-group a {
+      justify-content: center;
+      padding: 0 18px;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: color .3s, background .3s
+    }
+
+    .nav-group a:hover {
+      color: var(--fg);
+      background: rgba(255, 255, 255, .06)
+    }
+
+    .nav-group a.active {
+      color: var(--bg);
+      background: var(--fg)
+    }
+
+    .nav-group a::after {
+      display: none
     }
 
     .menu a {
@@ -262,6 +301,30 @@
       .menu .pill {
         font-family: Inter;
         font-size: 18px
+      }
+
+      .nav-group {
+        flex-direction: column;
+        gap: 28px;
+        padding: 0;
+        border: 0;
+        background: none;
+        backdrop-filter: none
+      }
+
+      .nav-group a {
+        color: var(--fg);
+        padding: 0
+      }
+
+      .nav-group a:hover {
+        background: none;
+        color: var(--accent)
+      }
+
+      .nav-group a.active {
+        background: none;
+        color: var(--accent)
       }
     }
 
@@ -1312,7 +1375,6 @@
 
     /* ---------- Scroll-built extras ---------- */
     main,
-    header,
     footer {
       position: relative;
       z-index: 2
@@ -1321,6 +1383,14 @@
     .hero {
       min-height: auto;
       height: 100vh
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        height: auto;
+        min-height: 100vh;
+        padding-top: 110px
+      }
     }
 
     .hero .giant span {
@@ -1654,9 +1724,11 @@
         </svg>
       </button>
       <div class="menu" id="menu">
-        <a href="#trabalhos">Trabalhos</a>
-        <a href="#sobre">Sobre</a>
-        <a href="#trajetoria">Trajetória</a>
+        <div class="nav-group">
+          <a href="#trabalhos">Trabalhos</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#trajetoria">Trajetória</a>
+        </div>
         <a href="#contato" class="pill">Contato</a>
       </div>
     </nav>
@@ -1745,11 +1817,38 @@
           </article>
 
           <article class="case">
+            <div class="case-media gallery-trigger" data-gallery="prazos" role="button" tabindex="0"
+              aria-label="Abrir galeria — Prazo Certo (3 telas)">
+              <img src="prints/prazos-1.jpg" alt="Prazo Certo — quadro de prazos por urgência (dados fictícios)"
+                loading="lazy">
+              <span class="case-media-hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                </svg>Ver galeria · 3</span>
+            </div>
+            <div class="case-info">
+              <span class="case-num">02</span>
+              <h3>Prazo Certo</h3>
+              <p class="case-cat">Controle de prazos · Sistema web · 2026</p>
+              <p class="case-desc">Central de prazos processuais do escritório. Puxa as intimações do DJEN e do PJe,
+                organiza os prazos num quadro por urgência — hoje, esta semana, futuro — e mostra quem é o responsável
+                por cada um, para que nenhum vencimento passe despercebido.</p>
+              <ul class="case-feats">
+                <li>Quadro por urgência</li>
+                <li>Intimações do DJEN e PJe</li>
+                <li>Prazos por responsável</li>
+                <li>Alertas de vencimento</li>
+              </ul>
+              <div class="case-chips"><span>React</span><span>Vite</span><span>DJEN</span><span>PJe</span></div>
+            </div>
+          </article>
+
+          <article class="case">
             <div class="case-media">
               <div class="ph">Gestão de Processos<br>Prévia em breve</div>
             </div>
             <div class="case-info">
-              <span class="case-num">02</span>
+              <span class="case-num">03</span>
               <h3>Gestão de Processos <span class="case-badge">Em desenvolvimento</span></h3>
               <p class="case-cat">Automação · Aplicativo desktop (Windows)</p>
               <p class="case-desc">Automação para escritórios de advocacia que roda como um aplicativo no Windows. Faz o
@@ -1770,9 +1869,33 @@
           </article>
 
           <article class="case">
+            <div class="case-media">
+              <div class="ph">Protocolo de Processos<br>Prévia em breve</div>
+            </div>
+            <div class="case-info">
+              <span class="case-num">04</span>
+              <h3>Protocolo de Processos <span class="case-badge">Em desenvolvimento</span></h3>
+              <p class="case-cat">Automação · Protocolo processual</p>
+              <p class="case-desc">Automação que cuida do protocolo de processos do escritório, tirando da equipe uma
+                etapa manual e repetitiva do dia a dia.</p>
+              <div class="case-progress" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"
+                aria-label="Progresso do desenvolvimento">
+                <div class="lbl"><span>Progresso</span><b>90%</b></div>
+                <div class="track-bar"><i style="--p:90%"></i></div>
+              </div>
+              <ul class="case-feats">
+                <li>Protocolo automatizado</li>
+                <li>Envio de petições e anexos</li>
+                <li>Conferência antes do envio</li>
+                <li>Registro de cada protocolo</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="case">
             <div class="case-media gallery-trigger" data-gallery="umbler" role="button" tabindex="0"
-              aria-label="Abrir galeria — Umbler 2.0 (6 telas)">
-              <img src="prints/umbler-1.jpg" alt="Umbler 2.0 — central de atendimento por WhatsApp (dados fictícios)"
+              aria-label="Abrir galeria — JV Atendimento (6 telas)">
+              <img src="prints/umbler-1.jpg" alt="JV Atendimento — central de atendimento por WhatsApp (dados fictícios)"
                 loading="lazy">
               <span class="case-media-hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -1780,8 +1903,8 @@
                 </svg>Ver galeria · 6</span>
             </div>
             <div class="case-info">
-              <span class="case-num">03</span>
-              <h3>Umbler 2.0</h3>
+              <span class="case-num">05</span>
+              <h3>JV Atendimento</h3>
               <p class="case-cat">Sistema · Atendimento por WhatsApp · 2026</p>
               <p class="case-desc">Central de atendimento por WhatsApp para o escritório, no lugar do Umbler Talk.
                 Vários atendentes respondem pelo mesmo número, com as conversas organizadas por setor e um painel com o
@@ -1852,7 +1975,7 @@
               <h3>Desenvolvedor</h3>
               <p class="org">JVO Advocacia</p>
               <p class="muted" style="margin:0">Desenvolvo e mantenho os sistemas internos do escritório — atendimento
-                por WhatsApp (Umbler 2.0) e a plataforma de gestão de processos.</p>
+                por WhatsApp (JV Atendimento) e a plataforma de gestão de processos.</p>
             </div>
           </li>
         </ol>
@@ -1990,12 +2113,27 @@
       var burger = document.querySelector('.burger'), menu = document.getElementById('menu');
       burger.addEventListener('click', function () {
         var open = menu.classList.toggle('open');
+        header.classList.toggle('menu-open', open);
         burger.setAttribute('aria-expanded', open); burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
         burger.style.position = open ? 'relative' : ''; burger.style.zIndex = open ? '60' : '';
       });
-      function closeMenu() { menu.classList.remove('open'); burger.setAttribute('aria-expanded', false); burger.setAttribute('aria-label', 'Abrir menu'); burger.style.position = ''; burger.style.zIndex = ''; }
+      function closeMenu() { menu.classList.remove('open'); header.classList.remove('menu-open'); burger.setAttribute('aria-expanded', false); burger.setAttribute('aria-label', 'Abrir menu'); burger.style.position = ''; burger.style.zIndex = ''; }
       menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeMenu); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.classList.contains('open')) { closeMenu(); burger.focus(); } });
+
+      /* Destaca no menu a seção visível */
+      var navLinks = document.querySelectorAll('.nav-group a');
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          navLinks.forEach(function (a) {
+            var on = a.getAttribute('href') === '#' + e.target.id;
+            a.classList.toggle('active', on);
+            if (on) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+          });
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      ['inicio', 'trabalhos', 'sobre', 'trajetoria', 'contato'].forEach(function (id) { var el = document.getElementById(id); if (el) spy.observe(el); });
 
       /* Magnetic buttons */
       if (!reduce) document.querySelectorAll('.magnetic').forEach(function (b) {
@@ -2210,6 +2348,13 @@
   <script>
     (function () {
       var GAL = {
+        prazos: {
+          title: 'Prazo Certo', items: [
+            ['prints/prazos-1.jpg', 'Quadro de prazos por urgência'],
+            ['prints/prazos-2.jpg', 'Página inicial — situação do dia'],
+            ['prints/prazos-3.jpg', 'Próximos prazos e concluídos']
+          ]
+        },
         thalyta: {
           title: 'Thalyta Maia — Arquitetura', items: [
             ['prints/thalyta-1.jpg', 'Página inicial'],
@@ -2220,7 +2365,7 @@
           ]
         },
         umbler: {
-          title: 'Umbler 2.0', items: [
+          title: 'JV Atendimento', items: [
             ['prints/umbler-1.jpg', 'Conversa aberta'],
             ['prints/umbler-2.jpg', 'Caixa de entrada'],
             ['prints/umbler-3.jpg', 'Relatórios'],
